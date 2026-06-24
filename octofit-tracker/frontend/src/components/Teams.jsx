@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { buildApiUrl, endpoints } from "../api/endpoints";
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) {
@@ -23,11 +24,12 @@ function normalizeResponse(payload) {
 function Teams({ apiBaseUrl }) {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState("");
+  const endpointPath = "/api/teams/";
 
   useEffect(() => {
     async function fetchTeams() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/teams/`);
+        const response = await fetch(buildApiUrl(endpointPath || endpoints.teams));
         const data = await response.json();
         setTeams(normalizeResponse(data));
       } catch (fetchError) {

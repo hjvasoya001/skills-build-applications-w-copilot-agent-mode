@@ -4,11 +4,7 @@ import Leaderboard from "./components/Leaderboard";
 import Teams from "./components/Teams";
 import Users from "./components/Users";
 import Workouts from "./components/Workouts";
-
-const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : "http://localhost:8000";
+import { apiBaseUrl } from "./api/endpoints";
 
 function App() {
   return (
