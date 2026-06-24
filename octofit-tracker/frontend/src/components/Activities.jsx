@@ -23,12 +23,11 @@ function normalizeResponse(payload) {
 function Activities({ apiBaseUrl }) {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState("");
-  const endpointPath = "/api/activities/";
 
   useEffect(() => {
     async function fetchActivities() {
       try {
-        const response = await fetch(`${apiBaseUrl}${endpointPath}`);
+        const response = await fetch(`${apiBaseUrl}/api/activities/`);
         const data = await response.json();
         setActivities(normalizeResponse(data));
       } catch (fetchError) {

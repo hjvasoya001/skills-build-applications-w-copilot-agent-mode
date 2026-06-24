@@ -23,12 +23,11 @@ function normalizeResponse(payload) {
 function Leaderboard({ apiBaseUrl }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const [error, setError] = useState("");
-  const endpointPath = "/api/leaderboard/";
 
   useEffect(() => {
     async function fetchLeaderboard() {
       try {
-        const response = await fetch(`${apiBaseUrl}${endpointPath}`);
+        const response = await fetch(`${apiBaseUrl}/api/leaderboard/`);
         const data = await response.json();
         setLeaderboard(normalizeResponse(data));
       } catch (fetchError) {
