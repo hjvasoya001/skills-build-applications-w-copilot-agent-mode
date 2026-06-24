@@ -1,22 +1,17 @@
-import express from "express";
-import mongoose from "mongoose";
+import app from "./app";
+import { connectDb } from "./db";
+import { port, apiUrl, codespaceName } from "./config";
 
-const app = express();
-const port = Number(process.env.PORT) || 8000;
-const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/octofit-tracker";
+const apiHostMessage = codespaceName
+  ? `Codespace-aware API URL set to ${apiUrl}`
+  : `Local API URL set to ${apiUrl}`;
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.json({ message: "OctoFit Tracker backend is running." });
-});
-
-mongoose
-  .connect(mongoUri)
+connectDb()
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(port, () => {
       console.log(`Backend listening on port ${port}`);
+      console.log(apiHostMessage);
     });
   })
   .catch((error) => {
