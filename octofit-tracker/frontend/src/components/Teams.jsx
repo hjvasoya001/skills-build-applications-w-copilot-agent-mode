@@ -23,11 +23,12 @@ function normalizeResponse(payload) {
 function Teams({ apiBaseUrl }) {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState("");
+  const endpointPath = "/api/teams/";
 
   useEffect(() => {
     async function fetchTeams() {
       try {
-        const response = await fetch(`${apiBaseUrl}/teams/`);
+        const response = await fetch(`${apiBaseUrl}${endpointPath}`);
         const data = await response.json();
         setTeams(normalizeResponse(data));
       } catch (fetchError) {

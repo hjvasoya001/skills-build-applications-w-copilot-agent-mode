@@ -23,11 +23,12 @@ function normalizeResponse(payload) {
 function Users({ apiBaseUrl }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const endpointPath = "/api/users/";
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch(`${apiBaseUrl}/users/`);
+        const response = await fetch(`${apiBaseUrl}${endpointPath}`);
         const data = await response.json();
         setUsers(normalizeResponse(data));
       } catch (fetchError) {

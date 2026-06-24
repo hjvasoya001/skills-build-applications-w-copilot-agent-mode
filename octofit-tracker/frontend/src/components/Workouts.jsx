@@ -23,11 +23,12 @@ function normalizeResponse(payload) {
 function Workouts({ apiBaseUrl }) {
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState("");
+  const endpointPath = "/api/workouts/";
 
   useEffect(() => {
     async function fetchWorkouts() {
       try {
-        const response = await fetch(`${apiBaseUrl}/workouts/`);
+        const response = await fetch(`${apiBaseUrl}${endpointPath}`);
         const data = await response.json();
         setWorkouts(normalizeResponse(data));
       } catch (fetchError) {
