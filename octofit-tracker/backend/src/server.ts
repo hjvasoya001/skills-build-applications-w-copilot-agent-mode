@@ -1,7 +1,8 @@
 import app from "./app";
 import { connectDb } from "./config/database";
-import { port, apiUrl, codespaceName } from "./config";
+import { port, apiUrl } from "./config";
 
+const codespaceName = process.env.CODESPACE_NAME;
 const apiHostMessage = codespaceName
   ? `Codespace-aware API URL set to https://${codespaceName}-8000.app.github.dev`
   : `Local API URL set to ${apiUrl}`;
