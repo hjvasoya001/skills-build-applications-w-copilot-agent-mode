@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { buildApiUrl, endpoints } from "../api/endpoints";
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) {
@@ -29,7 +28,7 @@ function Workouts({ apiBaseUrl }) {
   useEffect(() => {
     async function fetchWorkouts() {
       try {
-        const response = await fetch(buildApiUrl(endpointPath || endpoints.workouts));
+        const response = await fetch(`${apiBaseUrl}/api/workouts/`);
         const data = await response.json();
         setWorkouts(normalizeResponse(data));
       } catch (fetchError) {

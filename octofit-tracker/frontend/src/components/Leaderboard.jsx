@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { buildApiUrl, endpoints } from "../api/endpoints";
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) {
@@ -29,7 +28,7 @@ function Leaderboard({ apiBaseUrl }) {
   useEffect(() => {
     async function fetchLeaderboard() {
       try {
-        const response = await fetch(buildApiUrl(endpointPath || endpoints.leaderboard));
+        const response = await fetch(`${apiBaseUrl}/api/leaderboard/`);
         const data = await response.json();
         setLeaderboard(normalizeResponse(data));
       } catch (fetchError) {

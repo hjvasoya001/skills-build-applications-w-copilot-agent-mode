@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { buildApiUrl, endpoints } from "../api/endpoints";
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) {
@@ -29,7 +28,7 @@ function Users({ apiBaseUrl }) {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch(buildApiUrl(endpointPath || endpoints.users));
+        const response = await fetch(`${apiBaseUrl}/api/users/`);
         const data = await response.json();
         setUsers(normalizeResponse(data));
       } catch (fetchError) {

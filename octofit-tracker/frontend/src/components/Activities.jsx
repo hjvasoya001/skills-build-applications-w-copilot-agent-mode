@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { buildApiUrl, endpoints } from "../api/endpoints";
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) {
@@ -29,7 +28,7 @@ function Activities({ apiBaseUrl }) {
   useEffect(() => {
     async function fetchActivities() {
       try {
-        const response = await fetch(buildApiUrl(endpointPath || endpoints.activities));
+        const response = await fetch(`${apiBaseUrl}/api/activities/`);
         const data = await response.json();
         setActivities(normalizeResponse(data));
       } catch (fetchError) {
