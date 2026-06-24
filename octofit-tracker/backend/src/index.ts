@@ -1,5 +1,5 @@
 import app from "./app";
-import { connectDb } from "./database";
+import { connectDb } from "./config/database";
 import { port, apiUrl, codespaceName } from "./config";
 
 const apiHostMessage = codespaceName
