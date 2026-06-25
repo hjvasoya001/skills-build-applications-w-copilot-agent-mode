@@ -24,11 +24,15 @@ function Workouts({ apiBaseUrl }) {
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState("");
   const endpointPath = "/api/workouts/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
 
   useEffect(() => {
     async function fetchWorkouts() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/workouts/`);
+        const response = await fetch(endpointUrl);
         const data = await response.json();
         setWorkouts(normalizeResponse(data));
       } catch (fetchError) {
@@ -37,7 +41,7 @@ function Workouts({ apiBaseUrl }) {
     }
 
     fetchWorkouts();
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, endpointUrl]);
 
   return (
     <section>

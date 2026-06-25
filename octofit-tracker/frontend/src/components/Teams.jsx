@@ -24,11 +24,15 @@ function Teams({ apiBaseUrl }) {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState("");
   const endpointPath = "/api/teams/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
 
   useEffect(() => {
     async function fetchTeams() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/teams/`);
+        const response = await fetch(endpointUrl);
         const data = await response.json();
         setTeams(normalizeResponse(data));
       } catch (fetchError) {
@@ -37,7 +41,7 @@ function Teams({ apiBaseUrl }) {
     }
 
     fetchTeams();
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, endpointUrl]);
 
   return (
     <section>

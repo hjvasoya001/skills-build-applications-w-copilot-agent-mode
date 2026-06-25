@@ -24,11 +24,15 @@ function Activities({ apiBaseUrl }) {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState("");
   const endpointPath = "/api/activities/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
 
   useEffect(() => {
     async function fetchActivities() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/activities/`);
+        const response = await fetch(endpointUrl);
         const data = await response.json();
         setActivities(normalizeResponse(data));
       } catch (fetchError) {
@@ -37,7 +41,7 @@ function Activities({ apiBaseUrl }) {
     }
 
     fetchActivities();
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, endpointUrl]);
 
   return (
     <section>

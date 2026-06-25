@@ -24,11 +24,15 @@ function Users({ apiBaseUrl }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const endpointPath = "/api/users/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/users/`);
+        const response = await fetch(endpointUrl);
         const data = await response.json();
         setUsers(normalizeResponse(data));
       } catch (fetchError) {
@@ -37,7 +41,7 @@ function Users({ apiBaseUrl }) {
     }
 
     fetchUsers();
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, endpointUrl]);
 
   return (
     <section>

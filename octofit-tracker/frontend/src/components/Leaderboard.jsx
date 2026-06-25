@@ -24,11 +24,15 @@ function Leaderboard({ apiBaseUrl }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const [error, setError] = useState("");
   const endpointPath = "/api/leaderboard/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
 
   useEffect(() => {
     async function fetchLeaderboard() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/leaderboard/`);
+        const response = await fetch(endpointUrl);
         const data = await response.json();
         setLeaderboard(normalizeResponse(data));
       } catch (fetchError) {
@@ -37,7 +41,7 @@ function Leaderboard({ apiBaseUrl }) {
     }
 
     fetchLeaderboard();
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, endpointUrl]);
 
   return (
     <section>
