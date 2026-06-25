@@ -1,0 +1,62 @@
+import { useEffect, useState } from "react";
+
+function normalizeResponse(payload) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(payload?.results)) {
+    return payload.results;
+  }
+
+  if (Array.isArray(payload?.items)) {
+    return payload.items;
+  }
+
+  if (Array.isArray(payload?.teams)) {
+    return payload.teams;
+  }
+
+  return [];
+}
+
+function Teams({ apiBaseUrl }) {
+  const [teams, setTeams] = useState([]);
+  const [error, setError] = useState("");
+  const endpointPath = "/api/teams/";
+  const codespacesEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
+  const endpointUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? codespacesEndpoint
+    : `${apiBaseUrl}${endpointPath}`;
+
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const response = await fetch(endpointUrl);
+        const data = await response.json();
+        setTeams(normalizeResponse(data));
+      } catch (fetchError) {
+        setError("Unable to load teams.");
+      }
+    }
+
+    fetchTeams();
+  }, [apiBaseUrl, endpointUrl]);
+
+  return (
+    <section>
+      <h2 className="h4">Teams</h2>
+      {error ? <p className="text-danger">{error}</p> : null}
+      <ul className="list-group">
+        {teams.map((team, index) => (
+          <li className="list-group-item" key={team._id || team.id || `${team.name || "team"}-${index}`}>
+            <strong>{team.name || "Unnamed team"}</strong>
+            <div className="small text-muted">{team.description || "No description"}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export default Teams;
